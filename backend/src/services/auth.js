@@ -14,6 +14,32 @@ async function login(email, password) {
   return new Session(user, token);
 }
 
+async function register(email, username, password) {
+  const existingUser = await db.user.findUnique({ where: { email } });
+  if (existingUser) {
+    throw new ApiError(409, "User already exists");
+  }
+
+  const existingUsername = await db.user.findUnique({ where: { username } });
+  if (existingUsername) {
+    throw new ApiError(409, "Username already exists");
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const user = await db.user.create({
+    data: {
+      email,
+      username,
+      password: hashedPassword,
+    },
+  });
+
+  token = Session.generateToken(user);
+  return new Session(user, token);
+}
+
 module.exports = {
   login,
+  register,
 };
