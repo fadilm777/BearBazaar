@@ -1,5 +1,5 @@
 
-run: clean install start-dev
+run: install start-dev
 
 install:
 	npm install
@@ -10,3 +10,4 @@ start-dev:
 clean:
 	rm -rf node_modules
 
+hard-run: clean run
