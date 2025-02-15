@@ -6,23 +6,69 @@ const Sell = () => {
     price: "",
     description: "",
     photo: null,
+    photoPreview: null, // For previewing the selected image
     location: "",
   });
 
+  const [errors, setErrors] = useState({}); // Store validation errors
+
+  // Handle text inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // If updating price, ensure it is non-negative
+    if (name === "price" && (isNaN(value) || value < 0)) {
+      setErrors({ ...errors, price: "Price must be a non-negative number" });
+    } else {
+      setErrors({ ...errors, price: "" });
+    }
+
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle photo upload and preview
   const handlePhotoChange = (e) => {
-    setFormData({ ...formData, photo: e.target.files[0] });
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, photo: file, photoPreview: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Basic validation: Ensure all required fields are filled
+    let newErrors = {};
+    if (!formData.title) newErrors.title = "Title is required";
+    if (!formData.price || formData.price <= 0) newErrors.price = "Price must be a non-negative number";
+    // if (!formData.description) newErrors.description = "Description is required";
+    // if (!formData.photo) newErrors.photo = "Please upload an image";
+    // if (!formData.location) newErrors.location = "Location is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return; // Stop submission if errors exist
+    }
+
     console.log("Form Submitted:", formData);
     alert("Item Listed Successfully!");
-    // Replace with backend API call to submit the form data and store it
+    // Replace this with an API call to save data
+
+    // Clear form after submission
+    setFormData({
+      title: "",
+      price: "",
+      description: "",
+      photo: null,
+      photoPreview: null,
+      location: "",
+    });
   };
 
   return (
@@ -42,6 +88,7 @@ const Sell = () => {
             placeholder="Enter item title"
             required
           />
+          {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
         </div>
 
         {/* Price */}
@@ -56,6 +103,7 @@ const Sell = () => {
             placeholder="Enter price"
             required
           />
+          {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
         </div>
 
         {/* Description */}
@@ -68,8 +116,9 @@ const Sell = () => {
             className="w-full p-2 border rounded-md"
             placeholder="Enter item description"
             rows="4"
-            required
+            // required
           ></textarea>
+          {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
         </div>
 
         {/* Photo Upload */}
@@ -80,8 +129,16 @@ const Sell = () => {
             accept="image/*"
             onChange={handlePhotoChange}
             className="w-full p-2 border rounded-md"
-            required
+            // required
           />
+          {errors.photo && <p className="text-red-500 text-sm">{errors.photo}</p>}
+
+          {/* Image Preview */}
+          {formData.photoPreview && (
+            <div className="mt-2">
+              <img src={formData.photoPreview} alt="Preview" className="w-full h-48 object-cover rounded-md shadow-md" />
+            </div>
+          )}
         </div>
 
         {/* Location */}
@@ -94,8 +151,9 @@ const Sell = () => {
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
             placeholder="Enter location"
-            required
+            // required
           />
+          {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
         </div>
 
         {/* Submit Button */}
