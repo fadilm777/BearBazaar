@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "./App.css";
 import {
-    Menubar,
-    MenubarContent,
-    MenubarItem,
-    MenubarMenu,
-    MenubarSeparator,
-    MenubarShortcut,
-    MenubarTrigger,
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Input } from "@/components/ui/input";
 import {
@@ -18,57 +18,62 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
-
+} from "@/components/ui/pagination";
+import bearBazaar from "./assets/bearbazaar.svg";
 
 export function SearchBar() {
-    return <Input type="search" placeholder="Search" className="w-64 p-2 border rounded-md" />;
+  return <Input type="search" placeholder="Search" className="w-64 p-2 border rounded-md" />;
 }
 
 function App() {
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
-    return (
-        <>
-            {/* Flex container to align SearchBar & Menubar in one row */}
-            <div className="flex items-center justify-between p-4 bg-gray-100 shadow-md">
-                {/* Search bar on the left */}
-                <SearchBar />
+  return (
+    <>
+      {/* Top Navigation Bar */}
+      <div className="flex items-center p-4 bg-gray-100 shadow-md">
+        {/* BearBazaar logo on the far left */}
+        <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto" />
 
-                {/* Navigation Menubar */}
-                <Menubar>
-                    <MenubarMenu>
-                        <MenubarTrigger>Home</MenubarTrigger>
-                    </MenubarMenu>
+        {/* Search bar */}
+        <SearchBar className="ml-4" />
 
-                    <MenubarMenu>
-                        <MenubarTrigger>Sell</MenubarTrigger>
-                    </MenubarMenu>
+        {/* Menubar aligned to the far right */}
+        <Menubar className="ml-auto flex gap-x-4">
+          <MenubarMenu>
+            <MenubarTrigger>Home</MenubarTrigger>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Sell</MenubarTrigger>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>My Listings</MenubarTrigger>
+          </MenubarMenu>
+          <MenubarMenu>
+            <MenubarTrigger>Profile</MenubarTrigger>
+          </MenubarMenu>
+        </Menubar>
+      </div>
 
-                    <MenubarMenu>
-                        <MenubarTrigger>Profile</MenubarTrigger>
-                    </MenubarMenu>
-                </Menubar>
-                </div>
-
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious href="#" />
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink href="#">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationNext href="#" />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-        </>
-    );
+      {/* Bottom Pagination */}
+      <Pagination className="mt-4">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </>
+  );
 }
 
 export default App;
