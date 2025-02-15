@@ -1,6 +1,11 @@
 const controller = require("../utils/controller");
 const service = require("../services/auth");
 
+async function getMe(req, res) {
+  const user = await service.getMe(req.session.userId);
+  res.send({ user });
+}
+
 async function login(req, res) {
   const { email, password } = req.body;
 
@@ -20,4 +25,5 @@ async function register(req, res) {
 module.exports = {
   login: controller(login),
   register: controller(register),
+  getMe: controller(getMe),
 };
