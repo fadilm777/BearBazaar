@@ -46,7 +46,7 @@ const Sell = () => {
     // Basic validation: Ensure all required fields are filled
     let newErrors = {};
     if (!formData.title) newErrors.title = "Title is required";
-    if (!formData.price || formData.price <= 0) newErrors.price = "Price must be a non-negative number";
+    if (!formData.price || formData.price < 0) newErrors.price = "Price must be a non-negative number";
     // if (!formData.description) newErrors.description = "Description is required";
     // if (!formData.photo) newErrors.photo = "Please upload an image";
     // if (!formData.location) newErrors.location = "Location is required";
