@@ -7,6 +7,15 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Input } from "@/components/ui/input";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 import bearBazaar from "./assets/bearbazaar.svg";
 
 // Import pages
@@ -61,6 +70,27 @@ function App() {
         <Route path="/my-listings" element={<MyListings />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
+
+      {/* add recommendation feed here */}
+
+      {/* Pagination */}
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+
     </>
   );
 }
