@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -x  # Trace all commands as they are run
+
+function setup() {
+  clean
+
+  echo "DATABASE_URL="file:./dev.db"" > .env
+  npm install
+  npx prisma db push
+  npm run dev
+}
+
+function clean() {
+  rm -rf node_modules
+  rm -rf .env
+}
+
+"$@"  # Dispatch to clean or setup
+# For example, run "clean" with `./x clean`
