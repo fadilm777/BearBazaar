@@ -1,3 +1,5 @@
+import { fetchAPI, parseBody } from "./common";
+
 /**
  * @typedef {Object} User
  * @param {number} id
@@ -25,11 +27,10 @@ export async function getMe() {
 /**
  * Log in with email and password
  *
- * @param {string} email
- * @param {string} password
+ * @param {{ email: string; password: string; }} data
  * @returns {Promise<Session>}
  */
-export async function login(email, password) {
+export async function login({ email, password }) {
   const res = await fetchAPI('/auth/login', 'post', { email, password });
   const { session } = await parseBody(res);
   localStorage.setItem('token', session.token);

@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const db = require('../db');
 const ApiError = require("../utils/ApiError");
+const Session = require("../models/session");
 
 /**
  * Get the user details from a user id.
@@ -33,8 +34,11 @@ async function getMe(userId) {
  */
 async function login(email, password) {
   const user = await db.user.findUnique({ where: { email } });
+  if (!user) {
+    throw new ApiError(401, "User not found, please sign up");
+  }
 
-  const same = await bcrypt.compare(password, user.password);
+  const same = await bcrypt.compare(password, user.passwordHash);
   if (!same) {
     throw new ApiError(401, "Invalid password");
   }
@@ -69,7 +73,7 @@ async function register(email, username, password) {
     data: {
       email,
       username,
-      password: hashedPassword,
+      passwordHash: hashedPassword,
     },
   });
 
