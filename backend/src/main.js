@@ -4,6 +4,8 @@ const port = 3000;
 
 const authRouter = require('./routes/auth');
 
+app.use(express.json());
+
 app.use('/auth', authRouter);
 
 app.listen(port, () => {

@@ -1,5 +1,9 @@
 const jwt = require('jsonwebtoken');
 
+// WARNING SUPER INSECURE !!!
+// Fine for now, this won't run in prod
+const JWT_SECRET = 'my-secret-key';
+
 /**
  * Represents a user session.
  */
@@ -18,7 +22,7 @@ class Session {
   static generateToken(user) {
     jwt.sign(
       { userId: user.id },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: '12h' });
   }
 
@@ -31,7 +35,7 @@ class Session {
    * @returns {Session} session
    */
   static validateToken(token) {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     return new Session(decoded.userId, token);
   }
 }

@@ -8,6 +8,7 @@ function controller(myController) {
       if (error instanceof ApiError) {
         res.status(error.code).send({ error: true, message: error.message });
       } else {
+        console.error(error);
         res.status(500).send({ error: true, message: "Internal Error" });
       }
     }
