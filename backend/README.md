@@ -14,3 +14,9 @@ Then install dependencies and setup the database.
 npm install  # Install dependencies
 npx prisma db push  # Setup the database
 ```
+
+## Run the Project
+
+```
+npm run dev  # Start the backend dev server, will auto reload when you make changes
+```
