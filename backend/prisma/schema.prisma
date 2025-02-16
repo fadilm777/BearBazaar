@@ -8,39 +8,47 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  username     String   @unique
-  email        String   @unique
-  passwordHash String
-  listings     Listing[] @relation("UserListings")
-  messages     Message[] @relation("UserMessages")
-
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id            Int            @id @default(autoincrement())
+  username      String         @unique
+  email         String         @unique
+  passwordHash  String
+  listings      Listing[]      @relation("UserListings")
+  conversations Conversation[] @relation("UserConversations")
+  messages      Message[]      @relation("UserMessages")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 }
 
 model Listing {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  price       Float    // Listing price
-  image       String?  // URL or path to the listing image
-  location    String?  // Location of the listing
-  sellerId    Int
-  seller      User      @relation("UserListings", fields: [sellerId], references: [id])
-  messages    Message[] @relation("ListingMessages")
+  id            Int            @id @default(autoincrement())
+  title         String
+  description   String
+  price         Float
+  image         String?
+  location      String?
+  sellerId      Int
+  seller        User           @relation("UserListings", fields: [sellerId], references: [id])
+  conversations Conversation[] @relation("ListingConversations")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Conversation {
+  id        Int       @id @default(autoincrement())
+  listingId Int
+  listing   Listing   @relation("ListingConversations", fields: [listingId], references: [id])
+  members   User[]    @relation("UserConversations")
+  messages  Message[] @relation("ConversationMessages")
+  createdAt DateTime  @default(now())
 }
 
 model Message {
-  id          Int      @id @default(autoincrement())
-  content     String   // Content of the message
-  listingId   Int
-  userId      Int
-  listing     Listing   @relation("ListingMessages", fields: [listingId], references: [id])
-  user        User      @relation("UserMessages", fields: [userId], references: [id])
-
-  createdAt   DateTime @default(now())
+  id             Int          @id @default(autoincrement())
+  content        String
+  listingId      Int
+  userId         Int
+  user           User         @relation("UserMessages", fields: [userId], references: [id])
+  conversation   Conversation @relation("ConversationMessages", fields: [conversationId], references: [id])
+  createdAt      DateTime     @default(now())
+  conversationId Int
 }
