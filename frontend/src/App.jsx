@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import { useState } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "./App.css";
 import bearBazaar from "./assets/bearbazaar.svg";
