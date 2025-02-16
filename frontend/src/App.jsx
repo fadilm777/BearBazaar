@@ -22,13 +22,11 @@ import { ResetPassword } from "./pages/Reset";
 function PageLayout() {
   return (
     <>
-      {/* Navigation Bar */}
-      <div className="flex items-center p-4 bg-gray-100 shadow-md">
-        {/* Home Button (Logo/Image) Now Redirects to /dashboard */}
+      <div className="flex items-center p-4 bg-gray-100 shadow-md rounded-full"> 
         <Link to="/dashboard">
-          <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto" />
+          <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto rounded-full" />
         </Link>
-        <AppSearchBar className="ml-4" />
+        <AppSearchBar className="ml-4 search-bar" />
         <AppMenuBar />
       </div>
 

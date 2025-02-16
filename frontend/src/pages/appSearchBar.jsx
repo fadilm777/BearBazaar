@@ -28,4 +28,17 @@ const AppSearchBar = () => {
   );
 };
 
-export default AppSearchBar;
+const AppSearchBar = () => {
+  return (
+    <form className="flex">
+      <input
+        type="text"
+        placeholder="Search..."
+        className="p-3 border rounded-full w-80"
+      />
+      <button type="submit" className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-full">
+        Search
+      </button>
+    </form>
+  );
+};
