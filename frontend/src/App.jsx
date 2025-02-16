@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-=======
 import { useState } from "react";
->>>>>>> cd826875355688bb38d75d521fc824e0ab6b0498
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "./App.css";
 import bearBazaar from "./assets/bearbazaar.svg";
@@ -21,14 +16,10 @@ import Sell from "./pages/Sell";
 import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
 
-<<<<<<< HEAD
-=======
 export function SearchBar() {
   return <Input type="search" placeholder="Search" className="w-64 p-2 border rounded-md" />;
 }
->>>>>>> main
 
->>>>>>> cd826875355688bb38d75d521fc824e0ab6b0498
 function App() {
   const location = useLocation(); // Get the current URL path
 
