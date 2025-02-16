@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+=======
 import { useState } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "./App.css";
@@ -26,6 +31,7 @@ import Profile from "./pages/Profile";
 export function SearchBar() {
   return <Input type="search" placeholder="Search" className="w-64 p-2 border rounded-md" />;
 }
+>>>>>>> main
 
 function App() {
   const location = useLocation(); // Get the current URL path
