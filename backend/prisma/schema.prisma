@@ -12,6 +12,7 @@ model User {
   username      String         @unique
   email         String         @unique
   passwordHash  String
+  profilePic    String?        // Path to profile picture
   listings      Listing[]      @relation("UserListings")
   conversations Conversation[] @relation("UserConversations")
   messages      Message[]      @relation("UserMessages")

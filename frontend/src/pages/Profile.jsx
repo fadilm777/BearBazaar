@@ -1,32 +1,52 @@
-// ALL INFORMATION IN THIS PAGE SHOULD BE LINKED TO THE DATABASE LATER ON
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getUserProfile } from "@/backend/profile"; // Correctly import the API function
 
 const Profile = () => {
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const profile = await getUserProfile();
+        setUserData(profile);
+      } catch (err) {
+        console.error("Error fetching profile:", err);
+        setError("Failed to load profile.");
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  if (loading) return <div className="text-center p-6">Loading...</div>;
+  if (error) return <div className="text-center p-6 text-red-500">{error}</div>;
+
   return (
     <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6 mt-8">
       <div className="flex items-center space-x-6">
-
         {/* Profile Picture */}
         <div className="flex-shrink-0">
           <img
-            src="https://via.placeholder.com/150" // Replace with actual image URL
+            src={userData.profilePic || "/uploads/default.png"}
             alt="Profile"
-            className="w-32 h-32 rounded-full border-4 border-gray-300"
+            className="w-32 h-32 rounded-full border-4 border-gray-300 object-cover"
           />
         </div>
 
         {/* Profile Information */}
         <div className="flex-1">
-          <h1 className="text-2xl font-bold">John Doe</h1>
+          <h1 className="text-2xl font-bold">{userData.username}</h1>
           <div className="mt-4 space-y-2">
             <div>
-              <label className="block text-gray-700 font-semibold">Email</label>
-              <p className="text-gray-900">johndoe@example.com</p>
+              <label className="block text-gray-700 font-semibold">Full Name</label>
+              <p className="text-gray-900">{userData.name || "Not Provided"}</p>
             </div>
 
             <div>
-              <label className="block text-gray-700 font-semibold">Phone Number</label>
-              <p className="text-gray-900">+1 (123) 456-7890</p>
+              <label className="block text-gray-700 font-semibold">Email</label>
+              <p className="text-gray-900">{userData.email}</p>
             </div>
           </div>
         </div>

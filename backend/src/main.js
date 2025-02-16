@@ -10,6 +10,7 @@ const port = 3000;
 const authRouter = require('./routes/auth');
 const listingsRouter = require('./routes/listings');
 const chatRouter = require('./routes/chat');
+const userRoutes = require("./routes/user");
 
 const app = express();
 const wsServer = new WebSocketServer({ noServer: true });
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/listings', listingsRouter);
 app.use('/chat', chatRouter);
+app.use("/user", userRoutes);
 
 wsServer.on("connection", (socket) => {
   socket.on("message", (message) => {
