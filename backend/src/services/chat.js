@@ -1,4 +1,5 @@
 const db = require('../db');
+const { emit } = require('./notify');
 
 async function getConversations(userId) {
   const conversations = await db.conversation.findMany({
@@ -19,10 +20,12 @@ async function createConversation(userId, listingId) {
 
   const conversation = await db.conversation.create({
     data: {
-      members: [
-        { connect: { id: userId } },
-        { connect: { id: listing.sellerId } },
-      ],
+      members: {
+        connect: [
+          { id: userId },
+          { id: listing.sellerId },
+        ],
+      },
       listingId,
     },
   });

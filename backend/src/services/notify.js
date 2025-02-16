@@ -9,3 +9,8 @@ function emit(userId, message) {
 function listen(userId, callback) {
   listeners[userId] = callback;
 }
+
+module.exports = {
+  emit,
+  listen,
+};

@@ -2,6 +2,7 @@ const { WebSocketServer } = require("ws");
 const { createServer } = require("node:http");
 const express = require('express');
 const Session = require("./models/session");
+const { listen } = require('./services/notify');
 
 const port = 3000;
 

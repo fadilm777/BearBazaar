@@ -1,4 +1,5 @@
-import { useContext, createContext, useState, useEffect, useMemo } from "react";
+import { useContext, createContext, useState, useMemo, useEffect } from "react";
+import { createConversation, getConversations, getMessages, sendMessage } from "@/backend/chat";
 
 const ChatContext = createContext();
 
@@ -9,13 +10,20 @@ export function useChat() {
 export function ChatProvider({ children }) {
   const [conversations, setConversations] = useState({});
   const [messages, setMessages] = useState({});
+  const [wsCache, setWs] = useState(null);
 
   useEffect(() => {
+    if (wsCache) {
+      return;
+    }
+
     const ws = new WebSocket("ws://localhost:3000");
     ws.addEventListener("open", () => {
       ws.send(JSON.stringify({ token: localStorage.getItem("token") }));
       ws.addEventListener("message", (event) => {
         const data = JSON.parse(event.data);
+
+        console.log(data);
 
         if (data.type === "message") {
           setMessages((messages) => {
@@ -43,6 +51,25 @@ export function ChatProvider({ children }) {
         }
       });
     });
+    setWs(ws);
+
+    getConversations()
+      .then((conversations) => {
+        setConversations((existing) => {
+          const newConversations = {...existing};
+          conversations.forEach((conversation) => {
+            if (!newConversations[conversation.id]) {
+              newConversations[conversation.id] = conversation;
+            }
+
+            // this is SLOW -- it's an "N+1 query"
+            // It was a small design error. We don't have the time to avoid this...
+            getMessages(conversation.id)
+              .then((messages) => setMessages((o) => ({ ...o, [conversation.id]: messages })))
+          });
+          return newConversations;
+        });
+    });
   });
 
   const conversationsList = useMemo(() => {
@@ -52,20 +79,21 @@ export function ChatProvider({ children }) {
     }));
   });
 
-  const createConversation = async (listingId) => {
+  const doCreateConversation = async (listingId) => {
     try {
       const id = await createConversation(listingId);
       setConversations((conversations) => ({
         [id]: { id, listingId },
         ...conversations,
       }));
+      return id;
     } catch (error) {
       // TODO: handle there
       console.error(error);
     }
   };
 
-  const sendMessage = async (conversationId, content) => {
+  const doSendMessage = async (conversationId, content) => {
     try {
       const id = await sendMessage(conversationId, content);
       setMessages((messages) => ({
@@ -74,18 +102,21 @@ export function ChatProvider({ children }) {
           { id, conversationId, content },
         ],
       }));
+      return id;
     } catch (error) {
       // TODO: handle there
       console.error(error);
     }
   };
 
+  console.log(conversationsList);
+
   return (
     <ChatContext.Provider
       value={{
         conversations: conversationsList,
-        createConversation,
-        sendMessage,
+        createConversation: doCreateConversation,
+        sendMessage: doSendMessage,
       }}
     >
       {children}

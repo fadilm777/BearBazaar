@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getListingDetails } from "@/backend/listings";
+import { Button } from "@/components/ui/button";
+import { useChat } from "@/contexts/ChatContext";
 
 const ListingDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  console.log('here');
+  const { createConversation } = useChat();
 
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,6 +30,15 @@ const ListingDetails = () => {
     })();
   }, [id]);
 
+  const handleStartConversation = async () => {
+    if (listing.conversations.length == 0) {
+      const conversationId = await createConversation(id);
+      navigate(`/dms?conversationId=${conversationId}`);
+    } else {
+      navigate(`/dms?conversationId=${listing.conversations[0].id}`);
+    }
+  };
+
   // TODO: use real UI here
   if (loading) {
     return (<p>Loading...</p>);
@@ -46,7 +58,15 @@ const ListingDetails = () => {
         <b>Price: </b>
         ${listing.price}
       </p>
+      <p>
+        <b>Seller: </b>
+        {listing.seller.username}
+      </p>
       <p>{listing.description}</p>
+
+      <Button onClick={handleStartConversation}>
+        Send Message
+      </Button>
     </>
   );
 };

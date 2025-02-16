@@ -25,15 +25,17 @@ import { ResetPassword } from "./pages/Reset";
 function PageLayout() {
   return (
     <AuthProvider>
-      <div className="flex items-center p-4 bg-gray-100 shadow-md rounded-full"> 
-        <Link to="/dashboard">
-          <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto rounded-full" />
-        </Link>
-        <AppSearchBar className="ml-4 search-bar" />
-        <AppMenuBar />
-      </div>
+      <ChatProvider>
+        <div className="flex items-center p-4 bg-gray-100 shadow-md rounded-full"> 
+          <Link to="/dashboard">
+            <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto rounded-full" />
+          </Link>
+          <AppSearchBar className="ml-4 search-bar" />
+          <AppMenuBar />
+        </div>
 
-      <Outlet />
+        <Outlet />
+      </ChatProvider>
     </AuthProvider>
   );
 }
@@ -48,7 +50,7 @@ function AuthLayout() {
 
 function App() {
   return (
-    <ChatProvider>
+    <>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} /> {/* Default route is Login */}
 
@@ -70,7 +72,7 @@ function App() {
           <Route path="/listing/:id" element={<ListingDetails />} />
         </Route>
       </Routes>
-    </ChatProvider>
+    </>
   );
 }
 

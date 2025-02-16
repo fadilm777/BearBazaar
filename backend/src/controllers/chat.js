@@ -8,20 +8,20 @@ async function getConversations(req, res) {
 
 async function createConversation(req, res) {
   const { listingId } = req.body;
-  const id = await service.createConversation(req.session.userId, listingId);
+  const id = await service.createConversation(req.session.userId, parseInt(listingId));
   res.send({ id });
 }
 
 async function getMessages(req, res) {
   const { conversationId } = req.params;
-  const messages = await service.getMessages(req.session.userId, conversationId);
+  const messages = await service.getMessages(req.session.userId, parseInt(conversationId));
   res.send({ messages });
 }
 
 async function sendMessage(req, res) {
   const { conversationId } = req.params;
   const { content } = req.body;
-  const id = await service.sendMessage(req.session.userId, conversationId, content);
+  const id = await service.sendMessage(req.session.userId, parseInt(conversationId), content);
   res.send({ id });
 }
 
