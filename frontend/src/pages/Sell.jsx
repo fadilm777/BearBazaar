@@ -1,3 +1,4 @@
+import { createListing } from "@/backend/listings";
 import React, { useState } from "react";
 
 const Sell = () => {
@@ -57,6 +58,11 @@ const Sell = () => {
     }
 
     console.log("Form Submitted:", formData);
+    createListing({ 
+      title: formData.title,
+      description: formData.description,
+      price: parseFloat(formData.price),
+    });
     alert("Item Listed Successfully!");
     // Replace this with an API call to save data
 
