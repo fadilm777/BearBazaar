@@ -1,32 +1,34 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+=======
 import { useState } from "react";
+>>>>>>> cd826875355688bb38d75d521fc824e0ab6b0498
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "./App.css";
-import {
-  Menubar,
-  MenubarMenu,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
-import { Input } from "@/components/ui/input";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import bearBazaar from "./assets/bearbazaar.svg";
+
+// Import components
+import AppSearchBar from "./components/appSearchBar";
+import AppMenuBar from "./components/appMenuBar";
+import AppPagination from "./components/appPagination";
 
 // Import pages
 import Sell from "./pages/Sell";
 import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
 
+<<<<<<< HEAD
+=======
 export function SearchBar() {
   return <Input type="search" placeholder="Search" className="w-64 p-2 border rounded-md" />;
 }
+>>>>>>> main
 
+>>>>>>> cd826875355688bb38d75d521fc824e0ab6b0498
 function App() {
   const location = useLocation(); // Get the current URL path
 
@@ -38,31 +40,10 @@ function App() {
           <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto" />
         </Link>
 
-        <SearchBar className="ml-4" />
+        <AppSearchBar className="ml-4" />
 
         {/* Navigation Menu */}
-        <Menubar className="ml-auto flex gap-x-4">
-          <MenubarMenu>
-            <MenubarTrigger>
-              <Link to="/">Home</Link>
-            </MenubarTrigger>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>
-              <Link to="/sell">Sell</Link>
-            </MenubarTrigger>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>
-              <Link to="/my-listings">My Listings</Link>
-            </MenubarTrigger>
-          </MenubarMenu>
-          <MenubarMenu>
-            <MenubarTrigger>
-              <Link to="/profile">Profile</Link>
-            </MenubarTrigger>
-          </MenubarMenu>
-        </Menubar>
+        <AppMenuBar />
       </div>
 
       {/* Page Routes */}
@@ -74,26 +55,10 @@ function App() {
       </Routes>
 
       {/* Pagination: Show only on Home ("/") and My Listings ("/my-listings") */}
-      {(location.pathname === "/" || location.pathname === "/my-listings") && (
-        <Pagination className="mt-4">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+      {(location.pathname === "/" || location.pathname === "/my-listings") && <AppPagination />}
     </>
   );
 }
 
 export default App;
+
