@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-=======
 import { useState } from "react";
->>>>>>> cd826875355688bb38d75d521fc824e0ab6b0498
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, Outlet } from "react-router-dom";
 import "./App.css";
 import bearBazaar from "./assets/bearbazaar.svg";
 
@@ -20,18 +12,10 @@ import AppPagination from "./components/appPagination";
 import Sell from "./pages/Sell";
 import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
-<<<<<<< HEAD
-=======
-export function SearchBar() {
-  return <Input type="search" placeholder="Search" className="w-64 p-2 border rounded-md" />;
-}
->>>>>>> main
-
->>>>>>> cd826875355688bb38d75d521fc824e0ab6b0498
-function App() {
-  const location = useLocation(); // Get the current URL path
-
+function PageLayout() {
   return (
     <>
       {/* Navigation Bar */}
@@ -46,12 +30,34 @@ function App() {
         <AppMenuBar />
       </div>
 
+      <Outlet />
+    </>
+  );
+}
+
+export function SearchBar() {
+  return <Input type="search" placeholder="Search" className="w-64 p-2 border rounded-md" />;
+}
+
+function App() {
+  const location = useLocation(); // Get the current URL path
+
+  return (
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+
+
       {/* Page Routes */}
       <Routes>
-        <Route path="/" element={<h1 className="p-6 text-2xl font-bold">Welcome to Bear Bazaar</h1>} />
-        <Route path="/sell" element={<Sell />} />
-        <Route path="/my-listings" element={<MyListings />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route element={<PageLayout />}>
+          <Route path="/" element={<h1 className="p-6 text-2xl font-bold">Welcome to Bear Bazaar</h1>} />
+          <Route path="/sell" element={<Sell />} />
+          <Route path="/my-listings" element={<MyListings />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
 
       {/* Pagination: Show only on Home ("/") and My Listings ("/my-listings") */}
