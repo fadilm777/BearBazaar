@@ -13,6 +13,7 @@ import DMs from "./pages/DMs";
 import Sell from "./pages/Sell";
 import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
+import SearchResults from "./pages/SearchResults";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -50,6 +51,7 @@ function App() {
           <Route path="/sell" element={<Sell />} />
           <Route path="/my-listings" element={<MyListings />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/search" element={<SearchResults />} /> {/* Search Route with Query Param */}
         </Route>
       </Routes>
     </ChatProvider>
