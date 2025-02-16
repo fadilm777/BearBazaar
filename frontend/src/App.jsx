@@ -20,8 +20,8 @@ function App() {
     <>
       {/* Navigation Bar */}
       <div className="flex items-center p-4 bg-gray-100 shadow-md">
-        {/* 🏠 Home Button (Logo) Now Redirects to /login */}
-        <Link to="/login">
+        {/* Home Button (Logo/Image) Now Redirects to /dashboard */}
+        <Link to="/dashboard">
           <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto" />
         </Link>
         <AppSearchBar className="ml-4" />
