@@ -32,15 +32,27 @@ const DMs = () => {
         <h2 className="text-lg font-semibold mb-3">Chats</h2>
         <ul className="space-y-3">
           {conversations.map((chat) => (
-            <li
-              key={chat.id}
-              className={`p-3 rounded-lg cursor-pointer shadow-sm ${
-                activeConversationId === chat.id ? "bg-blue-300" : "bg-gray-200"
-              }`}
-              onClick={() => setActiveConversationId(chat.id)}
-            >
-              <span className="font-medium">{chat.listing?.title}</span>
-            </li>
+            // <li
+            //   key={chat.id}
+            //   className={`p-3 rounded-lg cursor-pointer shadow-sm ${
+            //     activeConversationId === chat.id ? "bg-blue-300" : "bg-gray-200"
+            //   }`}
+            //   onClick={() => setActiveConversationId(chat.id)}
+            // >
+            //   <span className="font-medium">{chat.listing?.title}</span>
+            // </li>
+        <li
+          key={chat.id}
+          className={`p-3 rounded-lg cursor-pointer shadow-sm ${
+            activeConversationId === chat.id ? "bg-blue-300" : "bg-gray-200"
+          }`}
+          onClick={() => setActiveConversationId(chat.id)}
+        >
+          <span className="font-medium">{chat.listing?.title}</span>
+          <span className="block text-sm text-gray-600">
+            Seller: {chat.listing?.seller?.username || "Unknown"}
+          </span>
+        </li>
           ))}
         </ul>
       </div>
@@ -51,7 +63,12 @@ const DMs = () => {
           <>
             {/* Chat Header */}
             <div className="flex items-center justify-between p-2 border-b">
-              <h2 className="text-md font-semibold">{activeConversation.listing?.title}</h2>
+              <h2 className="text-md font-semibold">
+                {activeConversation.listing?.title} -  
+                <span className="text-md text-gray-500">
+                  (Seller: <a className="hover:bg-grey hover:text-blue" href="#">{activeConversation.listing?.seller?.username || "Unknown"}</a>)
+                </span>
+              </h2>
             </div>
 
             {/* Messages Container */}

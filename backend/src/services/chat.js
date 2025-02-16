@@ -1,5 +1,5 @@
-const db = require('../db');
-const { emit } = require('./notify');
+const db = require("../db");
+const { emit } = require("./notify");
 
 async function getConversations(userId) {
   const conversations = await db.conversation.findMany({
@@ -7,7 +7,17 @@ async function getConversations(userId) {
       id: true,
       members: true,
       createdAt: true,
-      listing: true,
+      listing: {
+        select: {
+          id: true,
+          title: true,
+          seller: {
+            select: {
+              username: true,
+            },
+          },
+        },
+      },
     },
     where: {
       members: {
@@ -33,10 +43,7 @@ async function createConversation(userId, listingId) {
     },
     data: {
       members: {
-        connect: [
-          { id: userId },
-          { id: listing.sellerId },
-        ],
+        connect: [{ id: userId }, { id: listing.sellerId }],
       },
       listingId,
     },
