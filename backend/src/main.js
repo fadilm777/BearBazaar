@@ -1,6 +1,7 @@
 const { WebSocketServer } = require("ws");
 const { createServer } = require("node:http");
 const express = require('express');
+const cors = require('cors');
 const Session = require("./models/session");
 const { listen } = require('./services/notify');
 
@@ -14,6 +15,9 @@ const app = express();
 const wsServer = new WebSocketServer({ noServer: true });
 const server = createServer(app);
 
+app.use(cors({
+  origin: 'http://localhost:5173',
+}));
 app.use(express.json());
 
 app.use('/auth', authRouter);

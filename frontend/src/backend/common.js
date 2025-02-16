@@ -11,6 +11,7 @@ export function fetchAPI(
   data,
 ) {
   return window.fetch('http://localhost:3000' + route, {
+    cors: true,
     method,
     headers: {
       ...(window.localStorage.getItem('token')
