@@ -1,4 +1,6 @@
 const prisma = require("../db"); // Ensure Prisma is imported
+const ApiError = require("../utils/ApiError"); // Import ApiError for error handling
+const controller = require("../utils/controller"); // Import controller wrapper
 
 const getUserProfile = async (req, res) => {
     const user = await prisma.user.findUnique({
