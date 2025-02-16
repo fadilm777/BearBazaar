@@ -20,10 +20,9 @@ class Session {
    * @returns {string} token
    */
   static generateToken(user) {
-    jwt.sign(
-      { userId: user.id },
-      JWT_SECRET,
-      { expiresIn: '12h' });
+    return jwt.sign({ userId: user.id },
+                    JWT_SECRET,
+                    { expiresIn: '12h' });
   }
 
   /**

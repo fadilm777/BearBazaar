@@ -13,7 +13,7 @@ const Session = require("../models/session");
 async function authMiddleware(req, res, next) {
   // Should have the form "Bearer <token>"
   const tokenParts = req.headers.authorization.split(" ")[1];
-  if (!token || tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
+  if (tokenParts.length !== 2 || tokenParts[0] !== "Bearer") {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
