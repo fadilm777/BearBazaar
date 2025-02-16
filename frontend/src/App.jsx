@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import { ResetPassword } from "./pages/Reset";
 
 function PageLayout() {
   return (
@@ -39,11 +40,12 @@ function App() {
   return (
     <ChatProvider>
       <Routes>
+        {/* Authentication Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-      </Routes>
+        <Route path="/reset-password" element={<ResetPassword />} />
 
-      <Routes>
+        {/* Protected Routes */}
         <Route element={<PageLayout />}>
           <Route path="/" element={<Navigate to="/login" />} /> {/* Default route is Login */}
           <Route path="/dms" element={<DMs />} />
