@@ -14,6 +14,7 @@ import Sell from "./pages/Sell";
 import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
+import Dashboard from "./pages/Dashboard";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -35,18 +36,26 @@ function PageLayout() {
   );
 }
 
+function AuthLayout() {
+  return <Outlet />;
+}
+
 function App() {
   return (
     <ChatProvider>
       <Routes>
+        <Route path="/" element={<Navigate to="/login" />} /> {/* Default route is Login */}
+
         {/* Authentication Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+        </Route>
 
         {/* Protected Routes */}
         <Route element={<PageLayout />}>
-          <Route path="/" element={<Navigate to="/login" />} /> {/* Default route is Login */}
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dms" element={<DMs />} />
           <Route path="/sell" element={<Sell />} />
           <Route path="/my-listings" element={<MyListings />} />
