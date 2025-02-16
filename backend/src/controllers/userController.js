@@ -1,13 +1,8 @@
 const prisma = require("../db"); // Ensure Prisma is imported
 
 const getUserProfile = async (req, res) => {
-  try {
-    if (!req.user || !req.user.id) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
-
     const user = await prisma.user.findUnique({
-      where: { id: req.user.id },
+      where: { id: req.session.userId },
       select: {
         id: true,
         username: true,
@@ -16,20 +11,15 @@ const getUserProfile = async (req, res) => {
         profilePic: true,
       },
     });
+    if (!user) raise ApiError(404, "User not found");
 
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.json({
+    res.send({
       id: user.id,
       username: user.username,
       name: user.name || "Not Provided",
       email: user.email,
       profilePic: user.profilePic ? `/uploads/${user.profilePic}` : "/uploads/default.png",
     });
-  } catch (error) {
-    console.error("Profile fetch error:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
 };
 
-module.exports = { getUserProfile };
+module.exports = { getUserProfile: controller(getUserProfile) };
