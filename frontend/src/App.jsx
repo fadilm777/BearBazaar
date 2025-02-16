@@ -1,5 +1,7 @@
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { ChatProvider } from "./contexts/ChatContext";
+
 import "./App.css";
+import { Routes, Route, Link, Navigate, Outlet } from "react-router-dom";
 import bearBazaar from "./assets/bearbazaar.svg";
 
 // Import components
@@ -11,11 +13,13 @@ import DMs from "./pages/DMs";
 import Sell from "./pages/Sell";
 import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
-import { ChatProvider } from "./contexts/ChatContext";
 
-function App() {
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+
+function PageLayout() {
   return (
-    <ChatProvider>
+    <>
       {/* Navigation Bar */}
       <div className="flex items-center p-4 bg-gray-100 shadow-md">
         {/* Home Button (Logo/Image) Now Redirects to /dashboard */}
@@ -26,13 +30,27 @@ function App() {
         <AppMenuBar />
       </div>
 
-      {/* Page Routes */}
+      <Outlet />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <ChatProvider>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} /> {/* Default route is Login */}
-        <Route path="/dms" element={<DMs />} />
-        <Route path="/sell" element={<Sell />} />
-        <Route path="/my-listings" element={<MyListings />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+
+      <Routes>
+        <Route element={<PageLayout />}>
+          <Route path="/" element={<Navigate to="/login" />} /> {/* Default route is Login */}
+          <Route path="/dms" element={<DMs />} />
+          <Route path="/sell" element={<Sell />} />
+          <Route path="/my-listings" element={<MyListings />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
     </ChatProvider>
   );
