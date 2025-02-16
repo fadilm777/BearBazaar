@@ -1,4 +1,5 @@
 import { ChatProvider } from "./contexts/ChatContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
 import "./App.css";
 import { Routes, Route, Link, Navigate, Outlet } from "react-router-dom";
@@ -23,7 +24,7 @@ import { ResetPassword } from "./pages/Reset";
 
 function PageLayout() {
   return (
-    <>
+    <AuthProvider>
       <div className="flex items-center p-4 bg-gray-100 shadow-md rounded-full"> 
         <Link to="/dashboard">
           <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto rounded-full" />
@@ -33,11 +34,15 @@ function PageLayout() {
       </div>
 
       <Outlet />
-    </>
+    </AuthProvider>
   );
 }
 
 function AuthLayout() {
+  if (window.localStorage.getItem('token')) {
+    return <Navigate to="/dashboard" />
+  }
+
   return <Outlet />;
 }
 
