@@ -18,14 +18,7 @@ const Profile = () => {
         {/* Profile Information */}
         <div className="flex-1">
           <h1 className="text-2xl font-bold">John Doe</h1>
-          <p className="text-gray-600">Software Engineer</p>
-
           <div className="mt-4 space-y-2">
-            <div>
-              <label className="block text-gray-700 font-semibold">Full Name</label>
-              <p className="text-gray-900">John Doe</p>
-            </div>
-
             <div>
               <label className="block text-gray-700 font-semibold">Email</label>
               <p className="text-gray-900">johndoe@example.com</p>
