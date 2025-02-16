@@ -35,7 +35,7 @@ class Session {
    */
   static validateToken(token) {
     const decoded = jwt.verify(token, JWT_SECRET);
-    return new Session(decoded.userId, token);
+    return new Session({ id: decoded.userId }, token);
   }
 }
 

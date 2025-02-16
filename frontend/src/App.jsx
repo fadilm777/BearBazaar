@@ -15,6 +15,7 @@ import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
 import Dashboard from "./pages/Dashboard";
+import ListingDetails from "./pages/Listing";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -61,6 +62,7 @@ function App() {
           <Route path="/my-listings" element={<MyListings />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/search" element={<SearchResults />} /> {/* Search Route with Query Param */}
+          <Route path="/listing/:id" element={<ListingDetails />} />
         </Route>
       </Routes>
     </ChatProvider>
