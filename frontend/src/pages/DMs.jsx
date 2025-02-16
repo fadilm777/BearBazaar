@@ -38,7 +38,7 @@ const DMs = () => {
 
   return (
     <div className="flex h-[90vh] bg-gray-100 p-3">
-      {/* Sidebar (Better Spacing, Box for Each Chat) */}
+      {/* Sidebar (Better Spacing) */}
       <div className="w-1/4 bg-white p-3 border-r shadow-md">
         <h2 className="text-lg font-semibold mb-3">Chats</h2>
         <ul className="space-y-3">
@@ -65,15 +65,15 @@ const DMs = () => {
               <h2 className="text-md font-semibold">Chat with {activeChat.name}</h2>
             </div>
 
-            {/* Messages Container (More Height, No Overlap) */}
+            {/* Messages Container */}
             <div
               ref={chatContainerRef}
-              className="flex-grow overflow-y-auto p-2 max-h-[70vh] mb-16"
+              className="flex-grow overflow-y-auto p-2 max-h-[70vh]"
             >
               {messages.map((msg, index) => (
                 <div
                   key={index}
-                  className={`mb-3 p-2 text-sm max-w-xs rounded-lg ${
+                  className={`mb-2 p-2 text-sm max-w-xs rounded-lg ${
                     msg.sender === "user"
                       ? "bg-blue-500 text-white self-end ml-auto"
                       : "bg-gray-300"

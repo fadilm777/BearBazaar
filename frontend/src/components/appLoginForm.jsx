@@ -24,7 +24,7 @@ export function LoginForm() {
         email: e.target.email.value,
         password: e.target.password.value,
       });
-      navigate("/");
+      navigate("/dashboard");
     } catch (error) {
       setError(error.message);
     }
@@ -41,9 +41,11 @@ export function LoginForm() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
+            <div className="grid gap-2">
+              <div className="flex items-center">
                 <Label htmlFor="email">Email</Label>
+                </div>
+                <div className="grid gap-2">
                 <Input
                   id="email"
                   type="email"
@@ -55,7 +57,7 @@ export function LoginForm() {
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                   <a
-                    href="#"
+                    href="/reset-password"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                   >
                     Forgot your password?
