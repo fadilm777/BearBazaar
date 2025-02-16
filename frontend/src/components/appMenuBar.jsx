@@ -6,7 +6,7 @@ export function AppMenuBar() {
     <Menubar className="ml-auto flex gap-x-4">
       <MenubarMenu>
         <MenubarTrigger>
-          <Link to="/">Home</Link>
+          <Link to="/dms">DMs</Link>
         </MenubarTrigger>
       </MenubarMenu>
       <MenubarMenu>
