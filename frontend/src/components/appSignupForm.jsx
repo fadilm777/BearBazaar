@@ -59,7 +59,7 @@ export function SignupForm() {
       await register({
         email,
         username,
-        passwordHash: password
+        password,
       });
       navigate("/");
     } catch (error) {
