@@ -1,28 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useChat } from "@/contexts/ChatContext";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 const DMs = () => {
-  const [conversations, setConversations] = useState([]);
-  const [activeChat, setActiveChat] = useState(null);
-  const [messages, setMessages] = useState([]);
+  const { user } = useAuth();
+  const { conversations, sendMessage } = useChat();
+
+  const [activeConversationId, setActiveConversationId] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const chatContainerRef = useRef(null);
 
-  useEffect(() => {
-    setConversations([
-      { id: 1, name: "Seller A" },
-      { id: 2, name: "Seller B" },
-      { id: 3, name: "John Doe" },
-    ]);
-  }, []);
-
-  useEffect(() => {
-    if (activeChat) {
-      setMessages([
-        { sender: "seller", text: "Hey, are you interested?" },
-        { sender: "user", text: "Yes! What's the price?" },
-      ]);
-    }
-  }, [activeChat]);
+  const activeConversation = useMemo(() => activeConversationId && conversations.find((c) => c.id === activeConversationId), [activeConversationId, conversations]);
+  const messages = activeConversation?.messages ?? [];
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -32,7 +21,7 @@ const DMs = () => {
 
   const handleSendMessage = () => {
     if (!newMessage.trim()) return;
-    setMessages([...messages, { sender: "user", text: newMessage }]);
+    sendMessage(activeConversationId, newMessage);
     setNewMessage("");
   };
 
@@ -46,11 +35,11 @@ const DMs = () => {
             <li
               key={chat.id}
               className={`p-3 rounded-lg cursor-pointer shadow-sm ${
-                activeChat?.id === chat.id ? "bg-blue-300" : "bg-gray-200"
+                activeConversationId === chat.id ? "bg-blue-300" : "bg-gray-200"
               }`}
-              onClick={() => setActiveChat(chat)}
+              onClick={() => setActiveConversationId(chat.id)}
             >
-              <span className="font-medium">{chat.name}</span>
+              <span className="font-medium">{chat.listing?.title}</span>
             </li>
           ))}
         </ul>
@@ -58,11 +47,11 @@ const DMs = () => {
 
       {/* Chat Window */}
       <div className="w-3/4 flex flex-col bg-white shadow-md rounded-lg p-3 relative">
-        {activeChat ? (
+        {activeConversation ? (
           <>
             {/* Chat Header */}
             <div className="flex items-center justify-between p-2 border-b">
-              <h2 className="text-md font-semibold">Chat with {activeChat.name}</h2>
+              <h2 className="text-md font-semibold">{activeConversation.listing?.title}</h2>
             </div>
 
             {/* Messages Container */}
@@ -74,12 +63,12 @@ const DMs = () => {
                 <div
                   key={index}
                   className={`mb-2 p-2 text-sm max-w-xs rounded-lg ${
-                    msg.sender === "user"
+                    msg.userId === user.id
                       ? "bg-blue-500 text-white self-end ml-auto"
                       : "bg-gray-300"
                   }`}
                 >
-                  {msg.text}
+                  {msg.content}
                 </div>
               ))}
             </div>

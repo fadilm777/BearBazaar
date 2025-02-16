@@ -3,6 +3,12 @@ const { emit } = require('./notify');
 
 async function getConversations(userId) {
   const conversations = await db.conversation.findMany({
+    select: {
+      id: true,
+      members: true,
+      createdAt: true,
+      listing: true,
+    },
     where: {
       members: {
         some: {
@@ -19,6 +25,12 @@ async function createConversation(userId, listingId) {
   const listing = await db.listing.findUnique({ where: { id: listingId } });
 
   const conversation = await db.conversation.create({
+    select: {
+      id: true,
+      members: true,
+      createdAt: true,
+      listing: true,
+    },
     data: {
       members: {
         connect: [
@@ -43,9 +55,20 @@ async function createConversation(userId, listingId) {
 
 async function getMessages(userId, conversationId) {
   const messages = await db.message.findMany({
+    select: {
+      id: true,
+      content: true,
+      userId: true,
+      createdAt: true,
+      conversationId: true,
+    },
     where: {
       conversationId,
-      userId,
+      conversation: {
+        members: {
+          some: { id: userId },
+        },
+      },
     },
   });
 
@@ -54,6 +77,13 @@ async function getMessages(userId, conversationId) {
 
 async function sendMessage(userId, conversationId, content) {
   const message = await db.message.create({
+    select: {
+      id: true,
+      content: true,
+      userId: true,
+      createdAt: true,
+      conversationId: true,
+    },
     data: {
       userId,
       conversationId,

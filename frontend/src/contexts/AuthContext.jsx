@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
 
       try {
-        const user = getMe();
+        const user = await getMe();
         setUser(user);
       } catch (error) {
         localStorage.removeItem('token');

@@ -21,28 +21,19 @@ export function ChatProvider({ children }) {
     ws.addEventListener("open", () => {
       ws.send(JSON.stringify({ token: localStorage.getItem("token") }));
       ws.addEventListener("message", (event) => {
-        const data = JSON.parse(event.data);
+        const data = JSON.parse(event.data).message;
 
         console.log(data);
 
         if (data.type === "message") {
           setMessages((messages) => {
-            if (!messages[data.message.id]) {
-              messages[data.message.id] = [];
+            const newMessages = {...messages};
+            if (!newMessages[data.message.conversationId]) {
+              newMessages[data.message.conversationId] = [];
             }
-            messages[data.message.id].push(data.message);
-            return { ...messages };
+            newMessages[data.message.conversationId].push(data.message);
+            return newMessages;
           });
-          setConversations((conversations) => {
-
-            const newConversations = { ...conversations };
-            newConversations[data.conversationId] = newConversations[data.conversationId] || [];
-            newConversations[data.conversationId].push(data.message);
-            return newConversations;
-          });
-          const { conversationId, message } = data;
-          conversations[conversationId] = conversations[conversationId] || [];
-          conversations[conversationId].push(message);
         } else if (data.type === "conversation") {
           setConversations((conversations) => ({
             ...conversations,
@@ -79,44 +70,12 @@ export function ChatProvider({ children }) {
     }));
   });
 
-  const doCreateConversation = async (listingId) => {
-    try {
-      const id = await createConversation(listingId);
-      setConversations((conversations) => ({
-        [id]: { id, listingId },
-        ...conversations,
-      }));
-      return id;
-    } catch (error) {
-      // TODO: handle there
-      console.error(error);
-    }
-  };
-
-  const doSendMessage = async (conversationId, content) => {
-    try {
-      const id = await sendMessage(conversationId, content);
-      setMessages((messages) => ({
-        [conversationId]: [
-          ...messages[conversationId] ?? [],
-          { id, conversationId, content },
-        ],
-      }));
-      return id;
-    } catch (error) {
-      // TODO: handle there
-      console.error(error);
-    }
-  };
-
-  console.log(conversationsList);
-
   return (
     <ChatContext.Provider
       value={{
         conversations: conversationsList,
-        createConversation: doCreateConversation,
-        sendMessage: doSendMessage,
+        createConversation: createConversation,
+        sendMessage: sendMessage,
       }}
     >
       {children}

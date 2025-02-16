@@ -45,7 +45,6 @@ model Conversation {
 model Message {
   id             Int          @id @default(autoincrement())
   content        String
-  listingId      Int
   userId         Int
   user           User         @relation("UserMessages", fields: [userId], references: [id])
   conversation   Conversation @relation("ConversationMessages", fields: [conversationId], references: [id])
