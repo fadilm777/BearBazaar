@@ -1,9 +1,9 @@
-const { useState, useEffect } = require("react");
+import { useContext, createContext, useState, useEffect, useMemo } from "react";
 
-const ChatContext = React.createContext();
+const ChatContext = createContext();
 
 export function useChat() {
-  return React.useContext(ChatContext);
+  return useContext(ChatContext);
 }
 
 export function ChatProvider({ children }) {
@@ -12,34 +12,36 @@ export function ChatProvider({ children }) {
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:3000");
-    ws.send({ token: localStorage.getItem("token") });
-    ws.addEventListener("message", (event) => {
-      const data = JSON.parse(event.data);
+    ws.addEventListener("open", () => {
+      ws.send(JSON.stringify({ token: localStorage.getItem("token") }));
+      ws.addEventListener("message", (event) => {
+        const data = JSON.parse(event.data);
 
-      if (data.type === "message") {
-        setMessages((messages) => {
-          if (!messages[data.message.id]) {
-            messages[data.message.id] = [];
-          }
-          messages[data.message.id].push(data.message);
-          return { ...messages };
-        });
-        setConversations((conversations) => {
+        if (data.type === "message") {
+          setMessages((messages) => {
+            if (!messages[data.message.id]) {
+              messages[data.message.id] = [];
+            }
+            messages[data.message.id].push(data.message);
+            return { ...messages };
+          });
+          setConversations((conversations) => {
 
-          const newConversations = { ...conversations };
-          newConversations[data.conversationId] = newConversations[data.conversationId] || [];
-          newConversations[data.conversationId].push(data.message);
-          return newConversations;
-        });
-        const { conversationId, message } = data;
-        conversations[conversationId] = conversations[conversationId] || [];
-        conversations[conversationId].push(message);
-      } else if (data.type === "conversation") {
-        setConversations((conversations) => ({
-          ...conversations,
-          [data.conversation.id]: data.conversation,
-        }));
-      }
+            const newConversations = { ...conversations };
+            newConversations[data.conversationId] = newConversations[data.conversationId] || [];
+            newConversations[data.conversationId].push(data.message);
+            return newConversations;
+          });
+          const { conversationId, message } = data;
+          conversations[conversationId] = conversations[conversationId] || [];
+          conversations[conversationId].push(message);
+        } else if (data.type === "conversation") {
+          setConversations((conversations) => ({
+            ...conversations,
+            [data.conversation.id]: data.conversation,
+          }));
+        }
+      });
     });
   });
 
@@ -79,7 +81,13 @@ export function ChatProvider({ children }) {
   };
 
   return (
-    <ChatContext.Provider value={{ conversations: conversationsList }}>
+    <ChatContext.Provider
+      value={{
+        conversations: conversationsList,
+        createConversation,
+        sendMessage,
+      }}
+    >
       {children}
     </ChatContext.Provider>
   );

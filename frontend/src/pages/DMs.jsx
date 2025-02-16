@@ -1,31 +1,18 @@
-import { useState, useEffect, useRef } from "react";
+import { useChat } from "@/contexts/ChatContext";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 const DMs = () => {
-  const [conversations, setConversations] = useState([]);
-  const [activeChat, setActiveChat] = useState(null);
-  const [messages, setMessages] = useState([]);
+  const { conversations, sendMessage } = useChat();
+
+  const [activeConversationId, setActiveConversationId] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [error, setError] = useState("");
   const chatContainerRef = useRef(null);
 
-  // Dummy conversations (replace with API call)
-  useEffect(() => {
-    setConversations([
-      { id: 1, name: "Seller A" },
-      { id: 2, name: "Seller B" },
-      { id: 3, name: "John Doe" },
-    ]);
-  }, []);
-
-  // Fetch messages when a conversation is selected
-  useEffect(() => {
-    if (activeChat) {
-      setMessages([
-        { sender: "seller", text: "Hey, are you interested?" },
-        { sender: "user", text: "Yes! What's the price?" },
-      ]);
-    }
-  }, [activeChat]);
+  const activeConversation = useMemo(() => (
+    conversations.find((chat) => chat.id === activeConversationId)
+  ), [activeConversationId, conversations]);
+  const messages = activeConversation?.messages ?? [];
 
   // Auto-scroll chat window to the latest message
   useEffect(() => {
@@ -36,17 +23,15 @@ const DMs = () => {
 
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
-
     try {
-      setMessages([...messages, { sender: "user", text: newMessage }]);
-      setNewMessage("");
+      await sendMessage(activeConversationId, newMessage);
     } catch (err) {
       setError("Failed to send message.");
     }
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex bg-gray-100" style={{ height: '80vh' }}>
       {/* Sidebar with Conversations */}
       <div className="w-1/4 bg-white p-4 border-r shadow-md">
         <h2 className="text-lg font-semibold mb-3">Chats</h2>
@@ -55,9 +40,9 @@ const DMs = () => {
             <li
               key={chat.id}
               className={`p-2 mb-2 rounded-lg cursor-pointer ${
-                activeChat?.id === chat.id ? "bg-blue-300" : "bg-gray-200"
+                activeConversationId === chat.id ? "bg-blue-300" : "bg-gray-200"
               }`}
-              onClick={() => setActiveChat(chat)}
+              onClick={() => setActiveConversationId(chat)}
             >
               {chat.name}
             </li>
@@ -67,11 +52,11 @@ const DMs = () => {
 
       {/* Chat Window */}
       <div className="w-3/4 flex flex-col bg-white shadow-md rounded-lg p-4">
-        {activeChat ? (
+        {activeConversation ? (
           <>
             {/* Chat Header */}
             <div className="flex items-center justify-between p-3 border-b">
-              <h2 className="text-lg font-semibold">Chat with {activeChat.name}</h2>
+              <h2 className="text-lg font-semibold">Chat with {activeConversation.name}</h2>
             </div>
 
             {/* Messages Container */}
