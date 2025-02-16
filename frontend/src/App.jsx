@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, Outlet } from "react-router-dom";
 import "./App.css";
+import { Routes, Route, Link, useLocation, Outlet } from "react-router-dom";
 import bearBazaar from "./assets/bearbazaar.svg";
 
 // Import components
@@ -35,10 +34,6 @@ function PageLayout() {
   );
 }
 
-export function SearchBar() {
-  return <Input type="search" placeholder="Search" className="w-64 p-2 border rounded-md" />;
-}
-
 function App() {
   const location = useLocation(); // Get the current URL path
 
@@ -67,4 +62,3 @@ function App() {
 }
 
 export default App;
-
