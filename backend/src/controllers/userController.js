@@ -11,7 +11,7 @@ const getUserProfile = async (req, res) => {
         profilePic: true,
       },
     });
-    if (!user) raise ApiError(404, "User not found");
+    if (!user) throw ApiError(404, "User not found");
 
     res.send({
       id: user.id,
