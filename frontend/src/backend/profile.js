@@ -3,6 +3,7 @@ import { fetchAPI, parseBody } from "./common";
 /**
  * @typedef {Object} UserProfile
  * @property {number} id
+ * @property {string} name
  * @property {string} username
  * @property {string} name
  * @property {string} email

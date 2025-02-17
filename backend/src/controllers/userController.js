@@ -7,6 +7,7 @@ const getUserProfile = async (req, res) => {
     where: { id: req.session.userId },
     select: {
       id: true,
+      name: true,
       username: true,
       email: true,
       profilePic: true,
@@ -16,6 +17,7 @@ const getUserProfile = async (req, res) => {
 
   res.send({
     id: user.id,
+    name: user.name,
     username: user.username,
     email: user.email,
     profilePic: user.profilePic ? `/uploads/${user.profilePic}` : "/uploads/default.png",

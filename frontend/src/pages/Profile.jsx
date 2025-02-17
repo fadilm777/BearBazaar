@@ -29,24 +29,27 @@ const Profile = () => {
         {/* Profile Picture */}
         <div className="flex-shrink-0">
           <img
-            src={userData.profilePic || "/uploads/default.png"}
-            alt="Profile"
+            src={userData.profilePic || "../../../uploads/default.png"}
             className="w-32 h-32 rounded-full border-4 border-gray-300 object-cover"
           />
         </div>
 
         {/* Profile Information */}
         <div className="flex-1">
-          <h1 className="text-2xl font-bold">{userData.username}</h1>
+          <h1 className="text-2xl font-bold">{userData.name}</h1>
           <div className="mt-4 space-y-2">
             <div>
-              <label className="block text-gray-700 font-semibold">Full Name</label>
+              <h1><label className="block text-gray-700 font-semibold">Name</label></h1>
               <p className="text-gray-900">{userData.name || "Not Provided"}</p>
+            </div>
+            <div>
+              <label className="block text-gray-700 font-semibold">Username</label>
+              <p className="text-gray-900">{userData.username || "Not Provided"}</p>
             </div>
 
             <div>
               <label className="block text-gray-700 font-semibold">Email</label>
-              <p className="text-gray-900">{userData.email}</p>
+              <p className="text-gray-900">{userData.email || "Not Provided"}</p>
             </div>
           </div>
         </div>

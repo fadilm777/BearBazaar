@@ -121,7 +121,8 @@ const Sell = () => {
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
             placeholder="Enter item description"
-            rows="4"
+            rows="3"
+            // keep this as 3, it's better for the UI to make it 1 page
             // required
           ></textarea>
           {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}

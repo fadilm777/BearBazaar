@@ -34,7 +34,7 @@ const MyListings = () => {
       {/* TODO: use real UI here */}
       {loading ? <p>Loading...</p> : null}
       {error ? <p>Error: ${error}</p> : null}
-      {!loading && listings.length === 0 && !error ? <p>You don't have any listings. Try creating some!</p> : null}
+      {!loading && listings.length === 0 && !error ? <p>You don&apos;t have any listings. Try creating some!</p> : null}
 
       {listings.map((listing) => <ListingCard key={listing.id} listing={listing} />)}
 
