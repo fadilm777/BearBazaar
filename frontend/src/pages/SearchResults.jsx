@@ -17,7 +17,7 @@ const SearchResults = () => {
           console.log("Fetching from:", `${API_BASE_URL}/listings/search?query=${encodeURIComponent(query)}`);
 
           if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`No results found`);
           }
 
           const data = await response.json();
