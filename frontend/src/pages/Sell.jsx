@@ -114,16 +114,17 @@ const Sell = () => {
             {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
           </div>
 
-          {/* Description */}
-          <div>
-            <label className="block font-semibold mb-1">Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-md"
-              placeholder="Enter item description"
-              rows="4"
+        {/* Description */}
+        <div>
+          <label className="block font-semibold mb-1">Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-md"
+            placeholder="Enter item description"
+            rows="3"
+            // keep this as 3, it's better for the UI to make it 1 page
             // required
             ></textarea>
             {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
