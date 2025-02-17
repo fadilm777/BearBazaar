@@ -6,13 +6,9 @@ const AppSearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      const response = await fetch(`/api/listings/search?query=${encodeURIComponent(searchQuery)}`);
-      const data = await response.json();
-      // Handle the search results (e.g., update state to display results)
-      console.log(data.listings);
       navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     }
   };
