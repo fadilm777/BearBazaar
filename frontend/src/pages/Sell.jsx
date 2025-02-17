@@ -1,4 +1,5 @@
 import { createListing } from "@/backend/listings";
+import { uploadFile } from "@/backend/upload";
 import React, { useState } from "react";
 
 const Sell = () => {
@@ -41,7 +42,7 @@ const Sell = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Basic validation: Ensure all required fields are filled
@@ -49,7 +50,7 @@ const Sell = () => {
     if (!formData.title) newErrors.title = "Title is required";
     if (!formData.price || formData.price < 0) newErrors.price = "Price must be a non-negative number";
     // if (!formData.description) newErrors.description = "Description is required";
-    // if (!formData.photo) newErrors.photo = "Please upload an image";
+    if (!formData.photo) newErrors.photo = "Please upload an image";
     // if (!formData.location) newErrors.location = "Location is required";
 
     if (Object.keys(newErrors).length > 0) {
@@ -57,11 +58,14 @@ const Sell = () => {
       return; // Stop submission if errors exist
     }
 
+    const image = await uploadFile(formData.photo);
+
     console.log("Form Submitted:", formData);
-    createListing({
+    await createListing({
       title: formData.title,
       description: formData.description,
       price: parseFloat(formData.price),
+      image,
     });
     alert("Item Listed Successfully!");
     // Replace this with an API call to save data

@@ -13,12 +13,13 @@ model User {
   username      String         @unique
   email         String         @unique
   passwordHash  String
-  profilePic    String?        // Path to profile picture
+  profilePic    String? // Path to profile picture
   listings      Listing[]      @relation("UserListings")
   conversations Conversation[] @relation("UserConversations")
   messages      Message[]      @relation("UserMessages")
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  images        Image[]        @relation("UserImages")
 }
 
 model Listing {
@@ -52,4 +53,12 @@ model Message {
   conversation   Conversation @relation("ConversationMessages", fields: [conversationId], references: [id])
   createdAt      DateTime     @default(now())
   conversationId Int
+}
+
+model Image {
+  id        String   @id
+  userId    Int
+  user      User     @relation("UserImages", fields: [userId], references: [id])
+  mime      String
+  createdAt DateTime @default(now())
 }

@@ -3,12 +3,14 @@
  * @param {string} route
  * @param {'get' | 'put' | 'post' | 'delete'} method
  * @param {Object} data
+ * @param {Object?} options
  * @returns Promise<Response>
  */
 export function fetchAPI(
   route,
   method,
   data,
+  { rawBody = false, accept = 'application/json', contentType = 'application/json' } = {},
 ) {
   return window.fetch('http://localhost:3000' + route, {
     mode: 'cors',
@@ -19,11 +21,11 @@ export function fetchAPI(
             Authorization: `Bearer ${window.localStorage.getItem('token')}`,
           }
         : {}),
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: accept,
+      'Content-Type': contentType,
       'Access-Control-Allow-Origin': '*',
     },
-    body: data ? JSON.stringify(data) : undefined,
+    body: rawBody ? data : (data ? JSON.stringify(data) : undefined),
     redirect: 'follow',
   });
 }
