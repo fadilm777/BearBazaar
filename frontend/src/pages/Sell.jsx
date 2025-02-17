@@ -58,7 +58,7 @@ const Sell = () => {
     }
 
     console.log("Form Submitted:", formData);
-    createListing({ 
+    createListing({
       title: formData.title,
       description: formData.description,
       price: parseFloat(formData.price),
@@ -78,39 +78,41 @@ const Sell = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
-      <h1 className="text-2xl font-bold mb-4">Sell Your Item</h1>
+    <>
+      <div className="bg-white h-14"></div>
+      <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6 border-slate-100 border-3">
+        <h1 className="text-2xl font-bold mb-4">Sell Your Item</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title */}
-        <div>
-          <label className="block font-semibold mb-1">Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-md"
-            placeholder="Enter item title"
-            required
-          />
-          {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Title */}
+          <div>
+            <label className="block font-semibold mb-1">Title</label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              className="w-full p-2 border rounded-md"
+              placeholder="Enter item title"
+              required
+            />
+            {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
+          </div>
 
-        {/* Price */}
-        <div>
-          <label className="block font-semibold mb-1">Price ($)</label>
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-md"
-            placeholder="Enter price"
-            required
-          />
-          {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
-        </div>
+          {/* Price */}
+          <div>
+            <label className="block font-semibold mb-1">Price ($)</label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              className="w-full p-2 border rounded-md"
+              placeholder="Enter price"
+              required
+            />
+            {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
+          </div>
 
         {/* Description */}
         <div>
@@ -124,54 +126,55 @@ const Sell = () => {
             rows="3"
             // keep this as 3, it's better for the UI to make it 1 page
             // required
-          ></textarea>
-          {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
-        </div>
+            ></textarea>
+            {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
+          </div>
 
-        {/* Photo Upload */}
-        <div>
-          <label className="block font-semibold mb-1">Photo</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handlePhotoChange}
-            className="w-full p-2 border rounded-md"
+          {/* Photo Upload */}
+          <div>
+            <label className="block font-semibold mb-1">Photo</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoChange}
+              className="w-full p-2 border rounded-md"
             // required
-          />
-          {errors.photo && <p className="text-red-500 text-sm">{errors.photo}</p>}
+            />
+            {errors.photo && <p className="text-red-500 text-sm">{errors.photo}</p>}
 
-          {/* Image Preview */}
-          {formData.photoPreview && (
-            <div className="mt-2">
-              <img src={formData.photoPreview} alt="Preview" className="w-full h-48 object-cover rounded-md shadow-md" />
-            </div>
-          )}
-        </div>
+            {/* Image Preview */}
+            {formData.photoPreview && (
+              <div className="mt-2">
+                <img src={formData.photoPreview} alt="Preview" className="w-full h-48 object-cover rounded-md shadow-md" />
+              </div>
+            )}
+          </div>
 
-        {/* Location */}
-        <div>
-          <label className="block font-semibold mb-1">Location</label>
-          <input
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-md"
-            placeholder="Enter location"
+          {/* Location */}
+          <div>
+            <label className="block font-semibold mb-1">Location</label>
+            <input
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              className="w-full p-2 border rounded-md"
+              placeholder="Enter location"
             // required
-          />
-          {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
-        </div>
+            />
+            {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
+          </div>
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"
-        >
-          List Item
-        </button>
-      </form>
-    </div>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"
+          >
+            List Item
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

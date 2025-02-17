@@ -16,6 +16,7 @@ import MyListings from "./pages/MyListings";
 import Profile from "./pages/Profile";
 import SearchResults from "./pages/SearchResults";
 import Dashboard from "./pages/Dashboard";
+import UserProfile from "./pages/UserProfile";
 import ListingDetails from "./pages/Listing";
 
 import Login from "./pages/Login";
@@ -26,7 +27,7 @@ function PageLayout() {
   return (
     <AuthProvider>
       <ChatProvider>
-        <div className="flex items-center p-4 bg-gray-100 shadow-md rounded-full"> 
+        <div className="flex items-center p-4 bg-gray-100 shadow-md rounded-full">
           <Link to="/dashboard">
             <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto rounded-full" />
           </Link>
@@ -70,6 +71,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/search" element={<SearchResults />} /> {/* Search Route with Query Param */}
           <Route path="/listing/:id" element={<ListingDetails />} />
+          <Route path="/kyle" element={<UserProfile />} />
         </Route>
       </Routes>
     </>
