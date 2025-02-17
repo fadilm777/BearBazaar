@@ -30,18 +30,18 @@ async function create(req, res) {
   res.send({ id });
 }
 
-async function search(req, res) {
-  const { query } = req.query; // Get the search query from the request
+// async function search(req, res) {
+//   const { query } = req.query; // Get the search query from the request
 
-  if (!query) {
-    return res.status(400).send({ error: true, message: "Query parameter is required." });
-  }
+//   if (!query) {
+//     return res.status(400).send({ error: true, message: "Query parameter is required." });
+//   }
 
-  const listings = await service.search(query); // Call the service to perform the search
-  res.send({ listings });
-}
+//   const listings = await service.search(query); // Call the service to perform the search
+//   res.send({ listings });
+// }
 
-const searchListings = async (req, res) => {
+const search = async (req, res) => {
   const { query } = req.query;
   if (!query) return res.status(400).json({ error: "Query parameter is required" });
 
@@ -58,7 +58,7 @@ const searchListings = async (req, res) => {
 
     res.json({ listings });
   } catch (error) {
-    console.error("Error in searchListings:", error); // Debugging log
+    console.error("Error in search:", error); // Debugging log
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -69,5 +69,4 @@ module.exports = {
   getOne: controller(getOne),
   create: controller(create),
   search: controller(search),
-  searchListings: controller(searchListings),
 };

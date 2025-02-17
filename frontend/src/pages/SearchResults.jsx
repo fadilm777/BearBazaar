@@ -12,7 +12,9 @@ const SearchResults = () => {
     const fetchResults = async () => {
       if (query) {
         try {
-          const response = await fetch(`/api/listings/search?query=${encodeURIComponent(query)}`);
+          const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Dynamically gets backend URL
+          const response = await fetch(`${API_BASE_URL}/listings/search?query=${encodeURIComponent(query)}`);
+          // const response = await fetch(`/api/listings/search?query=${encodeURIComponent(query)}`);
           if (!response.ok) {
             throw new Error("Failed to fetch results");
           }
@@ -34,7 +36,7 @@ const SearchResults = () => {
 
   return (
     <div className="p-4">
-      <h2 className="text-lg font-semibold mb-3">Search Results for "{query}"</h2>
+      <h2 className="text-lg font-semibold mb-3">Search Results for &quot;{query}&quot;</h2>
       <ul>
         {results.length > 0 ? (
           results.map((item) => (
