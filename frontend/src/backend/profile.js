@@ -20,3 +20,15 @@ export async function getUserProfile() {
   const profile = await parseBody(res);
   return profile;
 }
+
+/**
+ * Get the details of a profile
+ *
+ * @param {number} id
+ * @returns {Promise<ProfileDetails>} profile details
+ */
+export async function getProfileDetails(id) {
+  const res = await fetchAPI(`/profiles/${id}`, "get");
+  const profile = await parseBody(res);
+  return profile;
+}
