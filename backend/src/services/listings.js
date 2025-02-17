@@ -59,17 +59,9 @@ async function create(userId, listing) {
   return created.id;
 }
 
-async function getProfile(userId) {
-  const profile = await db.user.findUnique({
-    where: { id: userId },
-  });
-  return profile;
-}
-
 module.exports = {
   getFeed,
   getMine,
   getOne,
   create,
-  getProfile,
 };
