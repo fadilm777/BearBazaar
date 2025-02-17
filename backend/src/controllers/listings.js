@@ -29,9 +29,15 @@ async function create(req, res) {
   res.send({ id });
 }
 
+async function getProfile(req, res) {
+  const profile = await service.getProfile(req.params.id);
+  res.send({ profile });
+}
+
 module.exports = {
   getFeed: controller(getFeed),
   getMine: controller(getMine),
   getOne: controller(getOne),
   create: controller(create),
+  getProfile: controller(getProfile),
 };

@@ -8,5 +8,6 @@ router.get('/feed', authMiddleware, controller.getFeed);
 router.get('/mine', authMiddleware, controller.getMine);
 router.get('/details/:id', authMiddleware, controller.getOne);
 router.post('/', authMiddleware, controller.create);
+router.get('/profile/:id', authMiddleware, controller.getProfile);
 
 module.exports = router;
