@@ -9,18 +9,21 @@ const SearchResults = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
     const fetchResults = async () => {
       if (query) {
         try {
-          const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // Dynamically gets backend URL
           const response = await fetch(`${API_BASE_URL}/listings/search?query=${encodeURIComponent(query)}`);
-          // const response = await fetch(`/api/listings/search?query=${encodeURIComponent(query)}`);
+          console.log("Fetching from:", `${API_BASE_URL}/listings/search?query=${encodeURIComponent(query)}`);
+
           if (!response.ok) {
-            throw new Error("Failed to fetch results");
+            throw new Error(`HTTP error! Status: ${response.status}`);
           }
+
           const data = await response.json();
-          setResults(data.listings); // Assuming the API returns an object with a 'listings' array
+          setResults(data.listings);
         } catch (err) {
+          console.error("Fetch error:", err);
           setError(err.message);
         } finally {
           setLoading(false);
