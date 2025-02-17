@@ -31,7 +31,9 @@ function PageLayout() {
           <Link to="/dashboard">
             <img src={bearBazaar} alt="Bear Bazaar" className="h-12 w-auto rounded-full" />
           </Link>
-          <AppSearchBar className="ml-4 search-bar" />
+          <div className="ml-10">
+            <AppSearchBar className="search-bar" />
+          </div>
           <AppMenuBar />
         </div>
 
