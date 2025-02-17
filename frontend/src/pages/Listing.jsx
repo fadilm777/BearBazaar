@@ -79,7 +79,7 @@ const ListingDetails = () => {
           <Separator className="border-gray-200 dark:border-gray-800" />
           <div className="grid gap-4 text-sm leading-loose">
             <h2 className="text-lg text-left font-bold">
-              Descitpion:
+              Description:
             </h2>
             <p>
               {listing.description}
