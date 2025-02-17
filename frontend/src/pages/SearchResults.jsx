@@ -5,17 +5,32 @@ const SearchResults = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q"); // Get search query from URL
   const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Dummy search data (Replace with API)
   useEffect(() => {
-    if (query) {
-      setResults([
-        { id: 1, name: `Seller A - ${query}` },
-        { id: 2, name: `Seller B - ${query}` },
-        { id: 3, name: `John Doe - ${query}` },
-      ]);
-    }
+    const fetchResults = async () => {
+      if (query) {
+        try {
+          const response = await fetch(`/api/listings/search?query=${encodeURIComponent(query)}`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch results");
+          }
+          const data = await response.json();
+          setResults(data.listings); // Assuming the API returns an object with a 'listings' array
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchResults();
   }, [query]);
+
+  if (loading) return <div className="text-center p-6">Loading...</div>;
+  if (error) return <div className="text-center p-6 text-red-500">{error}</div>;
 
   return (
     <div className="p-4">
@@ -24,7 +39,7 @@ const SearchResults = () => {
         {results.length > 0 ? (
           results.map((item) => (
             <li key={item.id} className="p-2 border-b">
-              {item.name}
+              {item.title} - ${item.price}
             </li>
           ))
         ) : (

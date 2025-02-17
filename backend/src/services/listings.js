@@ -59,9 +59,22 @@ async function create(userId, listing) {
   return created.id;
 }
 
+async function search(query) {
+  const listings = await db.listing.findMany({
+    where: {
+      OR: [
+        { title: { contains: query, mode: 'insensitive' } },
+        { description: { contains: query, mode: 'insensitive' } },
+      ],
+    },
+  });
+  return listings;
+}
+
 module.exports = {
   getFeed,
   getMine,
   getOne,
   create,
+  search
 };

@@ -29,9 +29,21 @@ async function create(req, res) {
   res.send({ id });
 }
 
+async function search(req, res) {
+  const { query } = req.query; // Get the search query from the request
+
+  if (!query) {
+    return res.status(400).send({ error: true, message: "Query parameter is required." });
+  }
+
+  const listings = await service.search(query); // Call the service to perform the search
+  res.send({ listings });
+}
+
 module.exports = {
   getFeed: controller(getFeed),
   getMine: controller(getMine),
   getOne: controller(getOne),
   create: controller(create),
+  search: controller(search),
 };
