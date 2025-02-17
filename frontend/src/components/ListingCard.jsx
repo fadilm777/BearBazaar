@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Pencil, Send, HeartIcon, PlusIcon } from "lucide-react";
-
 export default function ListingCard({ key, location, listing }) {
 
   if (location == "sell") {

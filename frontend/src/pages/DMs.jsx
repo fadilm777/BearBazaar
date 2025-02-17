@@ -41,18 +41,17 @@ const DMs = () => {
             // >
             //   <span className="font-medium">{chat.listing?.title}</span>
             // </li>
-        <li
-          key={chat.id}
-          className={`p-3 rounded-lg cursor-pointer shadow-sm ${
-            activeConversationId === chat.id ? "bg-blue-300" : "bg-gray-200"
-          }`}
-          onClick={() => setActiveConversationId(chat.id)}
-        >
-          <span className="font-medium">{chat.listing?.title}</span>
-          <span className="block text-sm text-gray-600">
-            Seller: {chat.listing?.seller?.username || "Unknown"}
-          </span>
-        </li>
+            <li
+              key={chat.id}
+              className={`p-3 rounded-lg cursor-pointer shadow-sm ${activeConversationId === chat.id ? "bg-blue-300" : "bg-gray-200"
+                }`}
+              onClick={() => setActiveConversationId(chat.id)}
+            >
+              <span className="font-medium">{chat.listing?.title}</span>
+              <span className="block text-sm text-gray-600">
+                Seller: {chat.listing?.seller?.username || "Unknown"}
+              </span>
+            </li>
           ))}
         </ul>
       </div>
@@ -64,9 +63,9 @@ const DMs = () => {
             {/* Chat Header */}
             <div className="flex items-center justify-between p-2 border-b">
               <h2 className="text-md font-semibold">
-                {activeConversation.listing?.title} -  
+                {activeConversation.listing?.title} -
                 <span className="text-md text-gray-500">
-                  (Seller: <a className="hover:bg-grey hover:text-blue" href="#">{activeConversation.listing?.seller?.username || "Unknown"}</a>)
+                  (Seller: <a className="hover:bg-grey hover:text-blue" href="/kyle">{activeConversation.listing?.seller?.username || "Unknown"}</a>)
                 </span>
               </h2>
             </div>
@@ -79,11 +78,10 @@ const DMs = () => {
               {messages.map((msg, index) => (
                 <div
                   key={index}
-                  className={`mb-2 p-2 text-sm max-w-xs rounded-lg ${
-                    msg.userId === user.id
+                  className={`mb-2 p-2 text-sm max-w-xs rounded-lg ${msg.userId === user.id
                       ? "bg-blue-500 text-white self-end ml-auto"
                       : "bg-gray-300"
-                  }`}
+                    }`}
                 >
                   {msg.content}
                 </div>
