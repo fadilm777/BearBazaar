@@ -63,8 +63,8 @@ async function search(query) {
   const listings = await db.listing.findMany({
     where: {
       OR: [
-        { title: { contains: query, mode: 'insensitive' } },
-        { description: { contains: query, mode: 'insensitive' } },
+        { title: { contains: query} },
+        { description: { contains: query} },
       ],
     },
   });

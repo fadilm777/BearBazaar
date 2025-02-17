@@ -1,5 +1,6 @@
 const controller = require("../utils/controller");
 const service = require("../services/listings");
+const prisma = require("../db");
 
 async function getFeed(req, res) {
   const listings = await service.getFeed(req.session.userId);
@@ -40,10 +41,33 @@ async function search(req, res) {
   res.send({ listings });
 }
 
+const searchListings = async (req, res) => {
+  const { query } = req.query;
+  if (!query) return res.status(400).json({ error: "Query parameter is required" });
+
+  try {
+    const listings = await prisma.listing.findMany({
+      where: {
+        title: { contains: query},
+      },
+    });
+
+    if (!listings.length) {
+      return res.status(404).json({ error: "No listings found" });
+    }
+
+    res.json({ listings });
+  } catch (error) {
+    console.error("Error in searchListings:", error); // Debugging log
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getFeed: controller(getFeed),
   getMine: controller(getMine),
   getOne: controller(getOne),
   create: controller(create),
   search: controller(search),
+  searchListings: controller(searchListings),
 };
