@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Pencil, Send, HeartIcon, PlusIcon } from "lucide-react";
 export default function ListingCard({ key, location, listing }) {
 
@@ -23,8 +23,7 @@ export default function ListingCard({ key, location, listing }) {
       <div className="flex justify-between">
         <div>
           <h3 className="text-lg">
-            <Link href="#">
-              <span aria-hidden="true" className="absolute inset-0" />
+            <Link href="/////">
               {listing.title}
             </Link>
           </h3>
@@ -37,18 +36,17 @@ export default function ListingCard({ key, location, listing }) {
         <Button variant="outline" size="icon" className="flex-shrink-0">
           <HeartIcon className="size-4" />
         </Button>
-        <Button variant="outline" className="w-full">
-          {(!isSelling) ? (
-            <>
-              <Send className="size-4 me-1" /> Message Seller
-            </>
-          ) : (
-            <>
-              <Pencil className="size-4 me-1" /> Edit Listing
-            </>
-          )
-          }
-        </Button>
+        {(!isSelling) ? (
+
+          <Link to={"/listing/" + listing.id} className={buttonVariants({ variant: "outline", className: "w-full" })}>
+            <Send className="size-4 me-1" /> Go to listing
+          </Link>
+        ) : (
+          <Link className={buttonVariants({ variant: "outline", className: "w-full" })}>
+            <Pencil className="size-4 me-1" /> Edit Listing
+          </Link>
+        )
+        }
       </div>
     </div>
   );

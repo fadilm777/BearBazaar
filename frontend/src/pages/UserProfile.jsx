@@ -1,10 +1,10 @@
 import AppProfile from '@/components/appProfile'
 
-const UserProfile = () => {
+function UserProfile({ info }) {
   return (
     <div className='w-full justify-center'>
       <div className='h-32' />
-      <AppProfile />
+      <AppProfile user={info} />
     </div>
   )
 }

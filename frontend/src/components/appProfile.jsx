@@ -36,7 +36,7 @@ function AppProfile({ user }) {
           </div>
           <div className="flex w-full items-center gap-1 justify-center">
             <Phone className="size-4 me-1" />
-            <p>{user.phone}</p>
+            <p>{user.id}</p>
           </div>
         </div>
       </CardContent>

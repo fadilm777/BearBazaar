@@ -53,6 +53,7 @@ async function create(userId, listing) {
       description: listing.description,
       price: listing.price,
       seller: { connect: { id: userId } },
+      image: listing.image,
     },
   });
 

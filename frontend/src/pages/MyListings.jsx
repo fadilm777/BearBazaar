@@ -41,7 +41,6 @@ const MyListings = () => {
           {listings.map((listing) => <ListingCard key={listing.id} listing={listing} location={"sell"} />)}
         </div>
       </div>
-      <AppPagination />
     </>
   );
 };

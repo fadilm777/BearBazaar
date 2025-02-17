@@ -36,10 +36,12 @@ const Dashboard = () => {
       {loading ? <p>Loading...</p> : null}
       {error ? <p>Error: ${error}</p> : null}
       {!loading && listings.length === 0 && !error ? <p>We don't have any remaining listings. Invite your friends!</p> : null}
-
-      {listings.map((listing) => <ListingCard key={listing.id} listing={listing} />)}
-
-      <AppPagination />
+      <div className="h-8" />
+      <div className="flex justify-center">
+        <div className="grid grid-cols-3 gap-y-16 gap-28 2xl:gap-52 2xl:gap-y-16">
+          {listings.map((listing) => <ListingCard key={listing.id} listing={listing} location={"buy"} />)}
+        </div>
+      </div>
     </>
   );
 };

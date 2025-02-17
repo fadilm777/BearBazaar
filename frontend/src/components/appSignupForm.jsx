@@ -50,7 +50,7 @@ export function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const passwordError = validatePassword(name, password, email, username);
+    const passwordError = validatePassword(password, email, username);
     if (passwordError) {
       setError(passwordError);
       return;
@@ -87,7 +87,7 @@ export function SignupForm() {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
 
-            <div className="grid gap-2">
+              <div className="grid gap-2">
                 <Label htmlFor="email" className="text-left">Name</Label>
                 <Input
                   id="name"
@@ -112,7 +112,7 @@ export function SignupForm() {
               </div>
 
               <div className="grid gap-2">
-              <Label htmlFor="username" className="text-left">Username</Label>
+                <Label htmlFor="username" className="text-left">Username</Label>
                 <Input
                   id="username"
                   type="text"
@@ -125,23 +125,23 @@ export function SignupForm() {
 
               <div className="grid gap-2">
                 <Label htmlFor="password" className="text-left">Choose a Password</Label>
-                <Input 
-                  id="password" 
-                  type="password" 
+                <Input
+                  id="password"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required 
+                  required
                 />
               </div>
 
               <div className="grid gap-2">
                 <Label htmlFor="confirmPassword" className="text-left">Confirm Password</Label>
-                <Input 
-                  id="confirmPassword" 
-                  type="password" 
+                <Input
+                  id="confirmPassword"
+                  type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  required 
+                  required
                 />
               </div>
 
