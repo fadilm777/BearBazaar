@@ -6,6 +6,7 @@ import { getListingDetails } from "@/backend/listings";
 import { Button } from "@/components/ui/button";
 import { useChat } from "@/contexts/ChatContext";
 import { Heart, Send } from "lucide-react";
+import UserImage from "@/components/UserImage";
 
 const ListingDetails = () => {
   const { id } = useParams();
@@ -77,7 +78,7 @@ const ListingDetails = () => {
           <Separator className="border-gray-200 dark:border-gray-800" />
           <div className="grid gap-4 text-sm leading-loose">
             <h2 className="text-lg text-left font-bold">
-              Descritpion:
+              Description:
             </h2>
             <p>
               {listing.description}
@@ -138,8 +139,8 @@ const ListingDetails = () => {
             </button>
           </div>
           <div className="grid gap-4 md:gap-10">
-            <img
-              src="/placeholder.svg"
+            <UserImage
+              id={listing.image}
               alt="Product Image"
               width={600}
               height={600}
