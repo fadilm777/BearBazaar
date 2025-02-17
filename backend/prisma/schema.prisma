@@ -9,9 +9,11 @@ datasource db {
 
 model User {
   id            Int            @id @default(autoincrement())
+  name          String         @default("Unnamed User") // Provide a default value
   username      String         @unique
   email         String         @unique
   passwordHash  String
+  profilePic    String?        // Path to profile picture
   listings      Listing[]      @relation("UserListings")
   conversations Conversation[] @relation("UserConversations")
   messages      Message[]      @relation("UserMessages")

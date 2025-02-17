@@ -18,6 +18,7 @@ export function SignupForm() {
 
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +33,12 @@ export function SignupForm() {
     if (!minLength.test(password)) return "Password must be at least 8 characters.";
     if (!hasUpperCase.test(password)) return "Password must have at least one uppercase letter.";
     if (!hasLowerCase.test(password)) return "Password must have at least one lowercase letter.";
-    if (!hasSpecialChar.test(password)) return "Password must contain at least one special character.";
+    if (!hasSpecialChar.test(password)) {
+      return "Password must contain at least one special character.";
+    }
+    // else {
+    //   continue;
+    // }
 
     const emailPart = email.split("@")[0];
     if (password.includes(emailPart) || password.includes(username)) {
@@ -44,7 +50,7 @@ export function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const passwordError = validatePassword(password, email, username);
+    const passwordError = validatePassword(name, password, email, username);
     if (passwordError) {
       setError(passwordError);
       return;
@@ -57,6 +63,7 @@ export function SignupForm() {
 
     try {
       await register({
+        name,
         email,
         username,
         password,
@@ -73,12 +80,24 @@ export function SignupForm() {
         <CardHeader>
           <CardTitle className="text-2xl">Sign up</CardTitle>
           <CardDescription>
-            Choose a Unique username, enter your email, choose a strong password for your account
+            Please Enter your Details
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
+
+            <div className="grid gap-2">
+                <Label htmlFor="email" className="text-left">Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Firstname Lastname"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
 
               <div className="grid gap-2">
                 <Label htmlFor="email" className="text-left">Email</Label>
@@ -97,7 +116,7 @@ export function SignupForm() {
                 <Input
                   id="username"
                   type="text"
-                  placeholder="Username"
+                  placeholder="Choose a Unique Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
