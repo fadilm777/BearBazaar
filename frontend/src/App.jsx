@@ -73,6 +73,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/search" element={<SearchResults />} /> {/* Search Route with Query Param */}
           <Route path="/listing/:id" element={<ListingDetails />} />
+          <Route path="/user/:id" element={<UserProfile />} />
         </Route>
       </Routes>
     </>
