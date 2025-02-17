@@ -1,6 +1,4 @@
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
