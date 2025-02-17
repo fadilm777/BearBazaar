@@ -11,6 +11,7 @@ const authRouter = require('./routes/auth');
 const listingsRouter = require('./routes/listings');
 const chatRouter = require('./routes/chat');
 const userRoutes = require("./routes/user");
+const uploadRoutes = require("./routes/upload");
 
 const app = express();
 const wsServer = new WebSocketServer({ noServer: true });
@@ -19,12 +20,12 @@ const server = createServer(app);
 app.use(cors({
   origin: 'http://localhost:5173',
 }));
-app.use(express.json());
 
-app.use('/auth', authRouter);
-app.use('/listings', listingsRouter);
-app.use('/chat', chatRouter);
-app.use("/user", userRoutes);
+app.use('/auth', express.json(), authRouter);
+app.use('/listings', express.json(), listingsRouter);
+app.use('/chat', express.json(), chatRouter);
+app.use("/user", express.json(), userRoutes);
+app.use('/upload', uploadRoutes);
 
 wsServer.on("connection", (socket) => {
   socket.on("message", (message) => {
